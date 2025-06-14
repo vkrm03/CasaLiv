@@ -1,0 +1,155 @@
+.home {
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.hero-banner {
+  background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+  height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+  text-align: center;
+}
+
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.hero-text {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.explore-btn {
+  padding: 0.8rem 1.6rem;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+.explore-btn:hover {
+  background: #e43e5a;
+}
+
+/* Feature Section */
+.features {
+  padding: 2rem 2rem;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.features h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #1a237e;
+}
+
+.feature-grid {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.feature-tile {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 260px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-tile img {
+  width: 80px;
+  margin-bottom: 1rem;
+}
+
+.feature-tile:hover {
+  transform: translateY(-10px);
+}
+
+
+.destination-section {
+  padding: 1rem 2rem;
+  background-color: #f9f9f9;
+}
+
+.section-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+.destination-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  scrollbar-width: none;
+}
+
+.destination-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.destination-card {
+  flex: 0 0 auto;
+  width: 220px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease;
+  text-align: center;
+  overflow: hidden;
+}
+
+.destination-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.destination-card p {
+  margin: 0.8rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+}
+
+
+
+.footer {
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
