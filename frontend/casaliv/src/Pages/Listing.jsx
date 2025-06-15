@@ -1,34 +1,8 @@
 import React, { useState } from 'react';
+import listingsData from '../assets/CasaLiv.json';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../public/Listings.css';
-
-const dummyListings = [
-  {
-    id: 1,
-    title: 'Modern Beachfront Villa',
-    location: 'Malibu, California',
-    price: '$450/night',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-    rating: 3.5,
-  },
-  {
-    id: 2,
-    title: 'Cozy Mountain Retreat',
-    location: 'Aspen, Colorado',
-    price: '$320/night',
-    image: 'https://images.unsplash.com/photo-1650282621002-d14a59470135?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bW91bnRhaW4lMjByZXNvcnR8ZW58MHx8MHx8fDA%3D',
-    rating: 4.2,
-  },
-  {
-    id: 3,
-    title: 'Urban Penthouse Suite',
-    location: 'New York City, NY',
-    price: '$600/night',
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80',
-    rating: 4.8,
-  },
-];
 
 
 const Listings = () => {
@@ -60,7 +34,7 @@ const closeModal = () => {
     }));
   };
 
-  const filteredListings = dummyListings.filter(
+  const filteredListings = listingsData.filter(
     (listing) =>
       listing.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       listing.location.toLowerCase().includes(searchTerm.toLowerCase())
