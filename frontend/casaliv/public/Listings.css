@@ -1,0 +1,222 @@
+.listings-page {
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.search-bar {
+  display: flex;
+  background: white;
+  border-radius: 50px;
+  padding: 10px 20px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.search-input, .datepicker-input {
+  border: none;
+  outline: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  width: 150px;
+}
+
+.guest-dropdown-wrapper {
+  position: relative;
+}
+
+.guest-selector {
+  cursor: pointer;
+  background: #f8f8f8;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.guest-dropdown {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  background: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  z-index: 10;
+  width: 200px;
+}
+
+.guest-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.guest-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.guest-controls button {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color: #ddd;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.search-btn {
+  background-color: #ff385c;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+
+
+.listings-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  text-align: center;
+}
+
+.listings-subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 2rem;
+  font-size: 16px;
+}
+
+.listings-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+.listing-card {
+  width: 260px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+}
+
+.listing-img-wrapper {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.listing-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.listing-card:hover .listing-img {
+  transform: scale(1.05);
+}
+
+.listing-info {
+  padding: 14px;
+}
+
+.listing-title {
+  font-size: 18px;
+  margin: 4px 0;
+}
+
+.listing-location {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 8px;
+}
+
+.listing-price {
+  font-weight: bold;
+  font-size: 16px;
+  color: #ff385c;
+}
+
+@media screen and (max-width: 768px) {
+  .listings-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .listing-card {
+    width: 90%;
+  }
+
+  .listing-img-wrapper {
+    height: 200px;
+  }
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 20px;
+    padding: 15px;
+  }
+
+  .search-input,
+  .datepicker-input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .guest-selector {
+    width: 100%;
+  }
+
+  .search-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  .guest-dropdown {
+    width: 100%;
+    left: 0;
+  }
+
+  .listings-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .listing-card {
+    width: 100%;
+    max-width: 95%;
+  }
+
+  .listing-img {
+    height: 200px;
+  }
+}
