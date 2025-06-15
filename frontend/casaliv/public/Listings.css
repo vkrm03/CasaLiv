@@ -159,6 +159,217 @@
   color: #ff385c;
 }
 
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 18px;
+  color: #fbbf24; /* nice yellow */
+  margin-bottom: 12px;
+}
+
+.star {
+  color: #ddd;
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+.star.half {
+  background: linear-gradient(90deg, #fbbf24 50%, #ddd 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rating-value {
+  color: #444;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+
+
+.modal-wrapper {
+  background: white;
+  max-width: 800px;
+  width: 100%;
+  border-radius: 16px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+
+.modal-inner {
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-image-side {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-main-img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.modal-info-side {
+  padding: 24px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.modal-location {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.modal-price {
+  color: #ff385c;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.modal-desc {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #444;
+}
+
+.section-heading {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.amenities-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tag {
+  background-color: #f3f3f3;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.booking-form input,
+.booking-form textarea,
+.booking-form .datepicker-input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.booking-form button {
+  background-color: #ff385c;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 999px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.booking-dates {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.booking-dates .datepicker-input {
+  flex: 1;
+  min-width: 120px;
+}
+
+.map-box {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  margin-top: 10px;
+}
+
+.map-box iframe {
+  width: 100%;
+  height: 250px;
+  border: none;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  color: #444;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .modal-info-side {
+    padding: 16px;
+  }
+
+  .booking-dates {
+    flex-direction: column;
+  }
+}
+
+
+
+
+
+
 @media screen and (max-width: 768px) {
   .listings-grid {
     flex-direction: column;

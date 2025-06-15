@@ -10,6 +10,7 @@ const dummyListings = [
     location: 'Malibu, California',
     price: '$450/night',
     image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+    rating: 3.5,
   },
   {
     id: 2,
@@ -17,6 +18,7 @@ const dummyListings = [
     location: 'Aspen, Colorado',
     price: '$320/night',
     image: 'https://images.unsplash.com/photo-1650282621002-d14a59470135?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bW91bnRhaW4lMjByZXNvcnR8ZW58MHx8MHx8fDA%3D',
+    rating: 4.2,
   },
   {
     id: 3,
@@ -24,8 +26,10 @@ const dummyListings = [
     location: 'New York City, NY',
     price: '$600/night',
     image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
   },
 ];
+
 
 const Listings = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -38,6 +42,16 @@ const Listings = () => {
     infants: 0,
     pets: 0,
   });
+  const [selectedListing, setSelectedListing] = useState(null);
+
+const handleCardClick = (listing) => {
+  setSelectedListing(listing);
+};
+
+const closeModal = () => {
+  setSelectedListing(null);
+};
+
 
   const handleGuestChange = (type, delta) => {
     setGuests((prev) => ({
@@ -108,10 +122,17 @@ const Listings = () => {
       <h2 className="listings-title">Available Stays</h2>
 <p className="listings-subtitle">Browse top-rated properties worldwide.</p>
 
+
+
+
 <div className="listings-grid">
   {filteredListings.length > 0 ? (
     filteredListings.map((listing) => (
-      <div className="listing-card" key={listing.id}>
+      <div
+        className="listing-card"
+        key={listing.id}
+        onClick={() => handleCardClick(listing)}
+      >
         <div className="listing-img-wrapper">
           <img
             src={listing.image}
@@ -130,6 +151,84 @@ const Listings = () => {
     <p className="no-results">No listings found.</p>
   )}
 </div>
+
+
+
+
+{selectedListing && (
+  <div className="modal-overlay" onClick={closeModal}>
+    <div className="modal-wrapper" onClick={(e) => e.stopPropagation()}>
+      <button className="close-btn" onClick={closeModal}>×</button>
+      {console.log(selectedListing)}
+      <div className="modal-inner">
+
+        <div className="modal-info-side">
+          <h2 className="modal-title">{selectedListing.title}</h2>
+          <p className="modal-location">{selectedListing.location}</p>
+          <div className="rating-stars">
+  {[...Array(5)].map((_, index) => {
+    const starValue = index + 1;
+    return (
+      <span
+        key={index}
+        className={
+          selectedListing.rating >= starValue
+            ? 'star filled'
+            : selectedListing.rating >= starValue - 0.5
+            ? 'star half'
+            : 'star'
+        }
+      >
+        ★
+      </span>
+    );
+  })}
+  <span className="rating-value">{selectedListing.rating} / 5</span>
+</div>
+
+          <p className="modal-price">{selectedListing.price}</p>
+          <p className="modal-desc">
+            Experience a stay like never before! This property offers world-class comfort with scenic views and luxury amenities, ideal for your next vacation.
+          </p>
+
+          <h3 className="section-heading">Amenities</h3>
+          <div className="amenities-tags">
+            <span className="tag">🌐 Wi-Fi</span>
+            <span className="tag">🛏️ King Bed</span>
+            <span className="tag">🍳 Kitchen</span>
+            <span className="tag">🧼 Cleaning</span>
+            <span className="tag">🌿 Garden</span>
+            <span className="tag">🧳 Luggage Storage</span>
+          </div>
+
+          <h3 className="section-heading">Booking</h3>
+          <form className="booking-form">
+            <div className="booking-dates">
+              <DatePicker placeholderText="Check-in" className="datepicker-input" />
+              <DatePicker placeholderText="Check-out" className="datepicker-input" />
+            </div>
+            <input type="number" placeholder="Guests" min="1" className='guest-input'/>
+            <textarea placeholder="Special Notes" rows={3}></textarea>
+            <button type="submit">Confirm Booking</button>
+          </form>
+
+          <h3 className="section-heading">Location</h3>
+          <div className="map-box">
+            <iframe
+              title="location"
+              src={`https://www.google.com/maps?q=${encodeURIComponent(selectedListing.location)}&output=embed`}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
 
 
     </div>
