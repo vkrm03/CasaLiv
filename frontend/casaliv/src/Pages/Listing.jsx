@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import listingsData from '../assets/CasaLiv.json';
+import ChatBot from './Chatbot';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../public/Listings.css';
@@ -203,6 +204,7 @@ const closeModal = () => {
 )}
 
 
+<ChatBot />
 
 
     </div>
