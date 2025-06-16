@@ -112,6 +112,24 @@ app.post('/book', verifyToken, async (req, res) => {
   }
 });
 
+app.get('/user/bookings', verifyToken, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const bookings = await Booking.find({ userId }).sort({ checkIn: -1 });
+    const user = await User.findById(userId).select('name email phone');
+
+    res.status(200).json({
+      user,
+      bookings
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error fetching user bookings' });
+  }
+});
+
+
 
 app.get('/', (req, res) => {
   res.send('CasaLiv Auth Server running');

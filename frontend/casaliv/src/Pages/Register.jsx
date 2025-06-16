@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast , ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api_url from '../assets/Uri';
 import '../../public/Auth.css';
@@ -84,7 +84,7 @@ const Register = () => {
         </form>
         <p className="auth-link">Already have an account? <Link to="/login">Login</Link></p>
       </div>
-      
+      <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
 };
