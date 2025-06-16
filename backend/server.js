@@ -4,6 +4,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const jwt = require('jsonwebtoken');
 const User = require('./models/user');
+const Booking = require('./models/booking');
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,19 @@ mongoose.connect(process.env.MONGO_URI, {
   .catch(err => console.error("Mongo Error:", err));
 
 const JWT_SECRET = process.env.JWT_SECRET || 'casalivsecretkey';
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: 'Access Denied' });
+
+  try {
+    const verified = jwt.verify(token, JWT_SECRET);
+    req.user = verified;
+    next();
+  } catch (err) {
+    res.status(400).json({ message: 'Invalid Token' });
+  }
+};
 
 app.post('/register', async (req, res) => {
   try {
@@ -37,9 +51,7 @@ app.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: 'User not found' });
-
-    if (user.password !== password) {
+    if (!user || user.password !== password) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
 
@@ -58,6 +70,48 @@ app.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Login failed', error: err.message });
   }
 });
+
+app.post('/book', verifyToken, async (req, res) => {
+  try {
+    const {
+      listingId,
+      listingTitle,
+      location,
+      image,
+      pricePerNight,
+      checkIn,
+      checkOut,
+      guestCount,
+      notes
+    } = req.body;
+
+    const numericPrice = parseInt(pricePerNight.replace(/[^\d]/g, ''));
+    const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
+    const totalPrice = nights * numericPrice;
+
+    const booking = new Booking({
+      userId: req.user.userId,
+      listingId,
+      listingTitle,
+      location,
+      image,
+      pricePerNight: numericPrice, // 👈 key fix
+      totalPrice,
+      checkIn,
+      checkOut,
+      guestCount,
+      notes
+    });
+
+    await booking.save();
+    console.log("Booking saved!");
+    res.status(201).json({ message: 'Booking successful', booking });
+  } catch (err) {
+    console.error("Booking failed:", err);
+    res.status(500).json({ message: 'Booking failed', error: err.message });
+  }
+});
+
 
 app.get('/', (req, res) => {
   res.send('CasaLiv Auth Server running');

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import listingsData from '../assets/CasaLiv.json';
 import ChatBot from './Chatbot';
+import axios from 'axios';
+import api_url from '../assets/Uri';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../public/Listings.css';
@@ -10,6 +14,8 @@ const Listings = () => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [showGuests, setShowGuests] = useState(false);
+  const [bookingGuests, setBookingGuests] = useState(1);
+  const [notes, setNotes] = useState('');
   const [guests, setGuests] = useState({
     adults: 0,
     children: 0,
@@ -17,8 +23,6 @@ const Listings = () => {
     pets: 0,
   });
   const [selectedListing, setSelectedListing] = useState(null);
-
-  // NEW state for modal booking
   const [bookingCheckIn, setBookingCheckIn] = useState(null);
   const [bookingCheckOut, setBookingCheckOut] = useState(null);
 
@@ -37,6 +41,49 @@ const Listings = () => {
       ...prev,
       [type]: Math.max(0, prev[type] + delta),
     }));
+  };
+
+  const handleBooking = async (e) => {
+    e.preventDefault();
+
+    if (!bookingCheckIn || !bookingCheckOut) {
+      toast.error('Please select both check-in and check-out dates.');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      toast.error('You need to login to book.');
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        `${api_url}/book`,
+        {
+          listingId: selectedListing.id,
+          listingTitle: selectedListing.title,
+          location: selectedListing.location,
+          image: selectedListing.image,
+          pricePerNight: selectedListing.price,
+          checkIn: bookingCheckIn,
+          checkOut: bookingCheckOut,
+          guestCount: bookingGuests,
+          notes: notes,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      toast.success('Booking confirmed!');
+      closeModal();
+    } catch (error) {
+      console.error('Booking error:', error);
+      toast.error(error.response?.data?.message || 'Booking failed.');
+    }
   };
 
   const filteredListings = listingsData.filter(
@@ -180,7 +227,7 @@ const Listings = () => {
                 </div>
 
                 <h3 className="section-heading">Booking</h3>
-                <form className="booking-form">
+                <form className="booking-form" onSubmit={handleBooking}>
                   <div className="booking-dates">
                     <DatePicker
                       selected={bookingCheckIn}
@@ -197,8 +244,23 @@ const Listings = () => {
                       dateFormat="dd MMM yyyy"
                     />
                   </div>
-                  <input type="number" placeholder="Guests" min="1" className='guest-input' />
-                  <textarea placeholder="Special Notes" rows={3}></textarea>
+
+                  <input
+                    type="number"
+                    placeholder="Guests"
+                    min="1"
+                    value={bookingGuests}
+                    onChange={(e) => setBookingGuests(parseInt(e.target.value))}
+                    className="guest-input"
+                  />
+
+                  <textarea
+                    placeholder="Special Notes"
+                    rows={3}
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                  ></textarea>
+
                   <button type="submit">Confirm Booking</button>
                 </form>
 
@@ -219,6 +281,7 @@ const Listings = () => {
       )}
 
       <ChatBot />
+      <ToastContainer position="top-center" autoClose={2000} />
     </div>
   );
 };
