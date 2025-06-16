@@ -12,7 +12,7 @@ const Login = () => {
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  };    
 
   const handleLogin = async e => {
     e.preventDefault();
@@ -20,8 +20,11 @@ const Login = () => {
     try {
       const res = await axios.post(`${api_url}/login`, formData);
       localStorage.setItem('token', res.data.token);
-      toast.success('Login successful !!');
-      navigate('/listings');
+    localStorage.setItem('username', res.data.user.name);
+    window.dispatchEvent(new Event("userChanged")); 
+    toast.success('Login successful !!');
+    navigate('/listings');
+
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');
     } finally {

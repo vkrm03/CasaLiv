@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import AOS from 'aos';
+import { Link } from 'react-router-dom';
 import 'aos/dist/aos.css';
 import '../../public/Home.css';
 
@@ -17,7 +18,7 @@ const Home = () => {
         <div className="hero-text">
           <h1>Find Your Perfect Stay</h1>
           <p>CasaLiv brings you handpicked homes, just a click away.</p>
-          <button className="explore-btn">Explore Listings</button>
+           <Link to={'/listings'}><button className="explore-btn">Explore Listings</button></Link>
         </div>
       </section>
 
