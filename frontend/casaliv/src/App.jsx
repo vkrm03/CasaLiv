@@ -7,6 +7,7 @@ import Home from './Pages/Home';
 import Listings from './Pages/Listing';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import UserDashboard from './Pages/UserDashboard';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/listings" element={<Listings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/user" element={<UserDashboard />} />
       </Routes>
     </Router>
     <ToastContainer position="top-center" autoClose={2000} />

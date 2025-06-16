@@ -197,7 +197,7 @@ const closeModal = () => {
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
-        </div>
+        </div>  
       </div>
     </div>
   </div>

@@ -47,7 +47,11 @@ const Navbar = () => {
           >
             Logout
           </button>
-          <span className="text-gray-700 font-semibold"><i class="fa-solid fa-user"></i> Hi, {user.split(' ')[0]}</span>
+         <NavLink to="/user" className="text-gray-700 hover:text-pink-500 font-semibold transition duration-300 flex items-center gap-1"
+>
+  <i className="fa-solid fa-user"></i> Hi, {user.split(' ')[0]}
+</NavLink>
+
         </>
       );
     } else {
@@ -87,7 +91,10 @@ const Navbar = () => {
             <li><NavLink to="/listings" onClick={toggleMenu} className={linkClass}>Listings</NavLink></li>
             {user ? (
               <>
-                <li className="text-gray-700 font-semibold">Hi, {user.split(' ')[0]}</li>
+                <NavLink to="/user" className="text-gray-700 hover:text-pink-500 font-semibold transition duration-300 flex items-center gap-1">
+  <i className="fa-solid fa-user"></i> Hi, {user.split(' ')[0]}
+</NavLink>
+
                 <li><button onClick={() => { toggleMenu(); handleLogout(); }} className="text-gray-700 hover:text-pink-500 transition">Logout</button></li>
               </>
             ) : (
