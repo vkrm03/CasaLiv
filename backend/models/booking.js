@@ -13,6 +13,7 @@ const bookingSchema = new mongoose.Schema({
   checkOut: { type: Date, required: true },
   guestCount: { type: Number, required: true },
   notes: { type: String },
+  status: { type: String, default: 'Pending' },
   createdAt: { type: Date, default: Date.now }
 });
 

@@ -47,17 +47,25 @@ const UserDashboard = () => {
     className="h-52 w-full object-cover rounded-t-2xl"
   />
   <div className="p-5 space-y-4">
-    {/* Header */}
     <div className="flex justify-between items-start">
       <h3 className="text-xl font-bold text-gray-800">{booking.listingTitle}</h3>
-      <span className="bg-green-100 text-green-600 px-3 py-1 text-xs rounded-full font-semibold">
-        Confirmed
-      </span>
+      <span
+  className={`px-3 py-1 text-xs rounded-full font-semibold
+    ${
+      booking.status === 'Confirmed'
+        ? 'bg-green-100 text-green-600'
+        : booking.status === 'Pending'
+        ? 'bg-yellow-100 text-yellow-600'
+        : 'bg-red-100 text-red-600'
+    }`}
+>
+  {booking.status}
+</span>
+
     </div>
 
     <p className="text-sm text-gray-500">{booking.location}</p>
 
-    {/* Details */}
     <div className="text-sm text-gray-700 space-y-2">
       <div className="flex items-center gap-2">
         <span className="text-blue-500 font-semibold">📅 Check-in:</span>
