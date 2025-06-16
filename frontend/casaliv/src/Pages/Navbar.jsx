@@ -1,23 +1,28 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react'; // or emoji if you want
+import { NavLink } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const linkClass = ({ isActive }) =>
+    `text-gray-700 transition duration-300 hover:text-pink-500 ${
+      isActive ? 'underline underline-offset-8 decoration-pink-500 font-semibold' : ''
+    }`;
+
   return (
     <nav className="bg-gray-100 border-b border-gray-100 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-        <Link to="/" className="text-2xl font-extrabold text-pink-600 tracking-tight">
+        <NavLink to="/" className="text-2xl font-extrabold text-pink-600 tracking-tight">
           Casa<span className="text-blue-600">Liv</span>
-        </Link>
+        </NavLink>
 
         <div className="hidden md:flex space-x-8">
-          <Link to="/" className="text-gray-700 hover:text-pink-500 transition duration-300">Home</Link>
-          <Link to="/listings" className="text-gray-700 hover:text-pink-500 transition duration-300">Listings</Link>
-          <Link to="/register" className="text-gray-700 hover:text-pink-500 transition duration-300">Register</Link>
-          <Link to="/login" className="text-gray-700 hover:text-pink-500 transition duration-300">Login</Link>
+          <NavLink to="/" className={linkClass}>Home</NavLink>
+          <NavLink to="/listings" className={linkClass}>Listings</NavLink>
+          <NavLink to="/register" className={linkClass}>Register</NavLink>
+          <NavLink to="/login" className={linkClass}>Login</NavLink>
         </div>
 
         <div className="md:hidden">
@@ -28,48 +33,23 @@ const Navbar = () => {
       </div>
 
       {isOpen && (
-  <div className="md:hidden absolute top-16 left-0 w-full bg-white border-t border-gray-200 shadow-md z-40">
-    <ul className="flex flex-col px-6 py-4 space-y-3 text-center">
-      <li>
-        <Link
-          to="/"
-          onClick={toggleMenu}
-          className="block text-lg font-medium text-gray-800 hover:text-pink-600 transition-all"
-        >
-          Home
-        </Link>
-      </li>
-      <li>
-        <Link
-          to="/listings"
-          onClick={toggleMenu}
-          className="block text-lg font-medium text-gray-800 hover:text-pink-600 transition-all"
-        >
-          Listings
-        </Link>
-      </li>
-      <li>
-        <Link
-          to="/register"
-          onClick={toggleMenu}
-          className="block text-lg font-medium text-gray-800 hover:text-pink-600 transition-all"
-        >
-          Register
-        </Link>
-      </li>
-      <li>
-        <Link
-          to="/login"
-          onClick={toggleMenu}
-          className="block text-lg font-medium text-gray-800 hover:text-pink-600 transition-all"
-        >
-          Login
-        </Link>
-      </li>
-    </ul>
-  </div>
-)}
-
+        <div className="md:hidden absolute top-16 left-0 w-full bg-white border-t border-gray-200 shadow-md z-40">
+          <ul className="flex flex-col px-6 py-4 space-y-3 text-center">
+            <li>
+              <NavLink to="/" onClick={toggleMenu} className={linkClass}>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/listings" onClick={toggleMenu} className={linkClass}>Listings</NavLink>
+            </li>
+            <li>
+              <NavLink to="/register" onClick={toggleMenu} className={linkClass}>Register</NavLink>
+            </li>
+            <li>
+              <NavLink to="/login" onClick={toggleMenu} className={linkClass}>Login</NavLink>
+            </li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };
