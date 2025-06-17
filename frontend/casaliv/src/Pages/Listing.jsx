@@ -151,7 +151,7 @@ const Listings = () => {
       </div>
 
       <h2 className="listings-title">Available Stays</h2>
-      <p className="listings-subtitle">Browse top-rated properties worldwide.</p>
+      <p className="listings-subtitle">Browse top-rated properties worldwide</p>
 
       <div className="listings-grid">
         {filteredListings.length > 0 ? (
