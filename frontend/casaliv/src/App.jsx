@@ -10,6 +10,13 @@ import Register from './Pages/Register';
 import UserDashboard from './Pages/UserDashboard';
 import AdminDashboard from './Pages/AdminDashboard';
 import NotFound from './Pages/NotFound';
+import { Navigate } from 'react-router-dom';
+
+const AdminRoute = ({ children }) => {
+  const isAdmin = localStorage.getItem('admin') === 'true';
+  return isAdmin ? children : <Navigate to="/login" replace />;
+};
+
 
 
 function App() {
@@ -23,7 +30,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user" element={<UserDashboard />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin" element={<AdminRoute> <AdminDashboard /> </AdminRoute>}/>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
