@@ -5,6 +5,7 @@ import api_url from '../assets/Uri';
 
 const AdminDashboard = () => {
   const [bookings, setBookings] = useState([]);
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   const fetchBookings = async () => {
     try {
@@ -36,7 +37,8 @@ const AdminDashboard = () => {
           },
         }
       );
-      fetchBookings(); // refresh after update
+      setSelectedBooking(null); // close modal
+      fetchBookings(); // refresh data
     } catch (err) {
       console.error('Failed to update status:', err);
     }
@@ -64,7 +66,9 @@ const AdminDashboard = () => {
           <tbody>
             {bookings.length > 0 ? (
               bookings.map((booking) => (
-                <tr key={booking._id} className="border-b hover:bg-gray-50">
+                <tr key={booking._id} className={`border-b hover:bg-gray-50 ${ booking.status === 'Rejected' ? 'opacity-100 line-through text-gray-500' : ''}`}
+>
+
                   <td className="p-4">
                     <p className="font-bold">{booking.listingTitle}</p>
                     <p className="text-xs text-gray-500">{booking.location}</p>
@@ -91,15 +95,12 @@ const AdminDashboard = () => {
                     </span>
                   </td>
                   <td className="p-4">
-                    <select
-                      value={booking.status}
-                      onChange={(e) => handleStatusChange(booking._id, e.target.value)}
-                      className="border rounded px-2 py-1 text-sm"
+                    <button
+                      className="text-blue-600 font-medium underline text-sm"
+                      onClick={() => setSelectedBooking(booking)}
                     >
-                      <option value="Pending">Pending</option>
-                      <option value="Confirmed">Approved</option>
-                      <option value="Rejected">Rejected</option>
-                    </select>
+                      View
+                    </button>
                   </td>
                 </tr>
               ))
@@ -113,6 +114,71 @@ const AdminDashboard = () => {
           </tbody>
         </table>
       </div>
+
+{selectedBooking && (
+  <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center px-4">
+    <div className="bg-white rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden border border-gray-200 relative">
+
+      <button
+        onClick={() => setSelectedBooking(null)}
+        className="absolute top-4 right-5 text-2xl text-gray-400 hover:text-red-500 font-bold z-10"
+      >
+        &times;
+      </button>
+
+      <div className="grid md:grid-cols-2">
+        <div className="h-full">
+          <img
+            src={selectedBooking.image}
+            alt={selectedBooking.listingTitle}
+            className="h-full w-full object-cover"
+          />
+        </div>
+
+        <div className="p-6 space-y-4 bg-white">
+          <h2 className="text-2xl font-semibold text-gray-800">{selectedBooking.listingTitle}</h2>
+          <p className="text-sm text-gray-500">📍 {selectedBooking.location}</p>
+
+          <div className="text-sm text-gray-700 space-y-2">
+            <p><strong>👤 User:</strong> {selectedBooking.user?.name || 'Unknown'}</p>
+            <p><strong>📧 Email:</strong> {selectedBooking.user?.email || 'N/A'}</p>
+            <p><strong>📅 Check-in:</strong> {new Date(selectedBooking.checkIn).toLocaleDateString()}</p>
+            <p><strong>📅 Check-out:</strong> {new Date(selectedBooking.checkOut).toLocaleDateString()}</p>
+            <p><strong>👥 Guests:</strong> {selectedBooking.guestCount}</p>
+            <p><strong>💰 Price:</strong> ₹{selectedBooking.totalPrice}</p>
+            <p><strong>📝 Notes:</strong> <span className="italic text-gray-500">{selectedBooking.notes || 'No notes provided'}</span></p>
+            <p><strong>Status:</strong> <span className="font-medium">{selectedBooking.status}</span></p>
+          </div>
+
+          <div className="flex gap-3 mt-6">
+            <button
+              onClick={() => handleStatusChange(selectedBooking._id, 'Confirmed')}
+              className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Confirm
+            </button>
+            <button
+              onClick={() => handleStatusChange(selectedBooking._id, 'Rejected')}
+              className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Reject
+            </button>
+            <button
+              onClick={() => setSelectedBooking(null)}
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm font-medium"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+
     </div>
   );
 };
