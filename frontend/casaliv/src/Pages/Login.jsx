@@ -20,10 +20,13 @@ const Login = () => {
     try {
       const res = await axios.post(`${api_url}/login`, formData);
       localStorage.setItem('token', res.data.token);
-    localStorage.setItem('username', res.data.user.name);
-    window.dispatchEvent(new Event("userChanged")); 
-    toast.success('Login successful !!');
-    navigate('/listings');
+      localStorage.setItem('username', res.data.user.name);
+      if (res.data.user.email === 'admin@casaliv.com') {
+        localStorage.setItem('admin', true);
+      }
+      window.dispatchEvent(new Event("userChanged"));
+      toast.success('Login successful !!');
+      navigate('/listings');
 
     } catch (err) {
       toast.error(err.response?.data?.message || 'Login failed');

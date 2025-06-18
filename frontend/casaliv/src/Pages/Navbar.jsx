@@ -32,6 +32,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.setItem('admin', false);
     window.dispatchEvent(new Event("userChanged")); 
     navigate('/');
 
@@ -49,7 +50,7 @@ const Navbar = () => {
           </button>
          <NavLink to="/user" className="text-gray-700 hover:text-pink-500 font-semibold transition duration-300 flex items-center gap-1"
 >
-  <i className="fa-solid fa-user"></i> Hi, {user.split(' ')[0]}
+  <i className={`fa-solid ${localStorage.getItem('admin') === 'true' ? 'fa-user-shield' : 'fa-user'}`}></i> Hi, {localStorage.getItem('admin') === 'true' ? 'Admin' : user.split(' ')[0]}
 </NavLink>
 
         </>
