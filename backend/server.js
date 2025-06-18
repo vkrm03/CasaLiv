@@ -89,18 +89,24 @@ app.post('/book', verifyToken, async (req, res) => {
     const nights = Math.ceil((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24));
     const totalPrice = nights * numericPrice;
 
+    const user = await User.findById(req.user.userId).select('name email');
+
     const booking = new Booking({
       userId: req.user.userId,
       listingId,
       listingTitle,
       location,
       image,
-      pricePerNight: numericPrice, // 👈 key fix
+      pricePerNight: numericPrice,
       totalPrice,
       checkIn,
       checkOut,
       guestCount,
-      notes
+      notes,
+       user: {
+    name: user.name,
+    email: user.email
+  }
     });
 
     await booking.save();
@@ -126,6 +132,38 @@ app.get('/user/bookings', verifyToken, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error fetching user bookings' });
+  }
+});
+
+
+app.get('/admin/bookings', verifyToken, async (req, res) => {
+  try {
+    const bookings = await Booking.find()
+      .sort({ checkIn: -1 })
+      .populate('userId', 'name email');
+
+    res.status(200).json({ bookings });
+  } catch (err) {
+    console.error('Admin fetch failed:', err);
+    res.status(500).json({ message: 'Error fetching all bookings' });
+  }
+});
+
+app.put('/admin/bookings/:id/status', verifyToken, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const bookingId = req.params.id;
+
+    const updated = await Booking.findByIdAndUpdate(
+      bookingId,
+      { status },
+      { new: true }
+    );
+
+    res.status(200).json({ message: 'Status updated', booking: updated });
+  } catch (err) {
+    console.error('Status update error:', err);
+    res.status(500).json({ message: 'Failed to update booking status' });
   }
 });
 

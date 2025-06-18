@@ -14,6 +14,10 @@ const bookingSchema = new mongoose.Schema({
   guestCount: { type: Number, required: true },
   notes: { type: String },
   status: { type: String, default: 'Pending' },
+  user: {
+  name: { type: String },
+  email: { type: String }
+},
   createdAt: { type: Date, default: Date.now }
 });
 

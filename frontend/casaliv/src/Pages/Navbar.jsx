@@ -48,10 +48,14 @@ const Navbar = () => {
           >
             Logout
           </button>
-         <NavLink to="/user" className="text-gray-700 hover:text-pink-500 font-semibold transition duration-300 flex items-center gap-1"
+         <NavLink
+  to={localStorage.getItem('admin') === 'true' ? '/admin' : '/user'}
+  className="text-gray-700 hover:text-pink-500 font-semibold transition duration-300 flex items-center gap-1"
 >
-  <i className={`fa-solid ${localStorage.getItem('admin') === 'true' ? 'fa-user-shield' : 'fa-user'}`}></i> Hi, {localStorage.getItem('admin') === 'true' ? 'Admin' : user.split(' ')[0]}
+  <i className={`fa-solid ${localStorage.getItem('admin') === 'true' ? 'fa-user-shield' : 'fa-user'}`}></i>
+  Hi, {localStorage.getItem('admin') === 'true' ? 'Admin' : user.split(' ')[0]}
 </NavLink>
+
 
         </>
       );

@@ -8,6 +8,7 @@ import Listings from './Pages/Listing';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import UserDashboard from './Pages/UserDashboard';
+import AdminDashboard from './Pages/AdminDashboard';
 import NotFound from './Pages/NotFound';
 
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/user" element={<UserDashboard />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
