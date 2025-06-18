@@ -11,10 +11,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log("MongoDB Connected"))
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected"))
   .catch(err => console.error("Mongo Error:", err));
 
 const JWT_SECRET = process.env.JWT_SECRET || 'casalivsecretkey';
